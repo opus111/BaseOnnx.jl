@@ -64,5 +64,10 @@
             arr = collect(1:4)
             @test AttributeProto(:ff => TensorProto(arr)) |> serdeser |> attribute |> last |> Array == arr 
         end
+
+        @testset "Attribute Dict" begin
+            attrs = Dict(:int => 12, :str => "aaa", :floats => Float32.(2:5))
+            @test pairs(attrs) |> collect .|> AttributeProto .|> serdeser |> Dict == attrs
+        end
     end
 end

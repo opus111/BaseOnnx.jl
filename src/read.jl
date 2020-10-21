@@ -74,3 +74,5 @@ function attribute(p::AttributeProto)
         return Symbol(p.name) => getfield(p, field)
     end  
 end
+
+Dict(pa::AbstractVector{AttributeProto}) = Dict(attribute(p) for p in pa)
