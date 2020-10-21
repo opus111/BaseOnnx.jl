@@ -1,5 +1,9 @@
 module BaseOnnx
 
-# Write your package code here.
+using ProtoBuf
+include("onnx_pb.jl") 
+read(io) = readproto(io, ModelProto())
 
 end
+
+
