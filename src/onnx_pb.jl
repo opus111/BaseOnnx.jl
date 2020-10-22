@@ -236,9 +236,6 @@ mutable struct TypeProto_Tensor <: ProtoType
     shape::TensorShapeProto
     TypeProto_Tensor(; kwargs...) = (o=new(); fillunset(o); isempty(kwargs) || ProtoBuf._protobuild(o, kwargs); o)
 end #mutable struct TypeProto_Tensor
-hash(v::TypeProto_Tensor) = ProtoBuf.protohash(v)
-isequal(v1::TypeProto_Tensor, v2::TypeProto_Tensor) = ProtoBuf.protoisequal(v1, v2)
-==(v1::TypeProto_Tensor, v2::TypeProto_Tensor) = ProtoBuf.protoeq(v1, v2)
 
 mutable struct TypeProto <: ProtoType
     tensor_type::TypeProto_Tensor
