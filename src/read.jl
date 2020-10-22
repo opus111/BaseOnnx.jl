@@ -15,14 +15,14 @@ function array(p::TensorProto)
     # Can probably be cleaned up a bit 
     # TODO: Add missing datatypes...
     if p.data_type === TensorProto_DataType.INT64
-        if isdefined(p, :int64_data)
+        if isdefined(p, :int64_data) && !isempty(p.int64_data)
             return reshape(reinterpret(Int64, p.int64_data), reverse(p.dims)...)
         end
         return reshape(reinterpret(Int64, p.raw_data), reverse(p.dims)...)
     end
 
     if p.data_type === TensorProto_DataType.INT32
-        if isdefined(p, :int32_data)
+        if isdefined(p, :int32_data) && !isempty(p.int32_data)
             return reshape(p.int32_data , reverse(p.dims)...)
         end
         return reshape(reinterpret(Int32, p.raw_data), reverse(p.dims)...)
@@ -33,14 +33,14 @@ function array(p::TensorProto)
     end
 
     if p.data_type === TensorProto_DataType.DOUBLE
-        if isdefined(p, :double_data)
+        if isdefined(p, :double_data) && !isempty(p.double_data)
             return reshape(p.double_data , reverse(p.dims)...)
         end
         return reshape(reinterpret(Float64, p.raw_data), reverse(p.dims)...)
     end
 
     if p.data_type === TensorProto_DataType.FLOAT
-        if isdefined(p,:float_data)
+        if isdefined(p,:float_data) && !isempty(p.float_data)
             return reshape(reinterpret(Float32, p.float_data), reverse(p.dims)...)
         end
         return reshape(reinterpret(Float32, p.raw_data), reverse(p.dims)...) 
