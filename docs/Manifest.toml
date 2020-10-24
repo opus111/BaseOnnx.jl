@@ -4,6 +4,7 @@
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
 [[BaseOnnx]]
+deps = ["ProtoBuf"]
 path = ".."
 uuid = "0c4f4e62-154b-4cad-af80-ba2ac58839d5"
 version = "0.1.0"
@@ -68,6 +69,12 @@ uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 [[Printf]]
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
+[[ProtoBuf]]
+deps = ["Logging"]
+git-tree-sha1 = "eb9460532c18a82d77f68bf90bb270f6f7aac3a9"
+uuid = "3349acd9-ac6a-5e09-bcdb-63829b23a429"
+version = "0.9.0"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
