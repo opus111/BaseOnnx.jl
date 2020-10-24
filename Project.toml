@@ -7,7 +7,7 @@ version = "0.1.0"
 ProtoBuf = "3349acd9-ac6a-5e09-bcdb-63829b23a429"
 
 [compat]
-ProtoBuf = "0.8"
+ProtoBuf = "0.8, 0.9"
 julia = "1"
 
 [extras]
