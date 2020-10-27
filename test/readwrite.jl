@@ -7,7 +7,7 @@
     end
 
     @testset "TensorProto" begin
-        import BaseOnnx: TensorProto
+        import BaseOnnx: TensorProto, array
 
         @testset "Tensor type $T size $s" for T in (Int8, Int32, Int64, Float16, Float32, Float64), s in ((1,),
         (1, 2),
@@ -15,10 +15,8 @@
         (1, 2, 3, 4),
         (1, 2, 3, 4, 5))
             exp = reshape(collect(T, 1:prod(s)), s...)
-            @test TensorProto(exp) |> serdeser |> Array == exp
-
+            @test TensorProto(exp) |> serdeser |> array == exp
         end
-
     end
 
     @testset "ValueInfo" begin
@@ -41,7 +39,7 @@
     end
 
     @testset "Attribute" begin
-        import BaseOnnx: AttributeProto, TensorProto, attribute
+        import BaseOnnx: AttributeProto, TensorProto, attribute, array
     
         @testset "Attribute type $(first(p))" for p in (
         :Int64 => 12,
@@ -62,7 +60,7 @@
         @testset "Attribute type TensorProto" begin
             # TensorProto has undef fields which mess up straigh comparison
             arr = collect(1:4)
-            @test AttributeProto(:ff => TensorProto(arr)) |> serdeser |> attribute |> last |> Array == arr 
+            @test AttributeProto(:ff => TensorProto(arr)) |> serdeser |> attribute |> last |> array == arr 
         end
 
         @testset "Attribute Dict" begin

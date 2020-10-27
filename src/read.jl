@@ -1,53 +1,46 @@
-
-# Convenience function to allow for things like Array(tp) or CuArray(tp)
-# Not sure if this counts as type piracy...
-(::Type{T})(p::TensorProto) where T = array(p) |> T
-(::Type{Ref{T}})(p::TensorProto) where T = array(p) |> T |> Ref
-
-
 """
-    array(p::TensorProto)
+    array(p::TensorProto, wrap=Array)
 
-Return `p` as an reshaped and reinterpreted array.
+Return `p` as an `Array` of the correct type. Second argument can be used to change type of the returned array
 """
-function array(p::TensorProto)
+function array(p::TensorProto, wrap=Array)
     # Copy pasted from jl
     # Can probably be cleaned up a bit 
     # TODO: Add missing datatypes...
     if p.data_type === TensorProto_DataType.INT64
         if isdefined(p, :int64_data) && !isempty(p.int64_data)
-            return reshape(reinterpret(Int64, p.int64_data), reverse(p.dims)...)
+            return reshape(reinterpret(Int64, p.int64_data), reverse(p.dims)...) |> wrap
         end
-        return reshape(reinterpret(Int64, p.raw_data), reverse(p.dims)...)
+        return reshape(reinterpret(Int64, p.raw_data), reverse(p.dims)...) |> wrap
     end
 
     if p.data_type === TensorProto_DataType.INT32
         if isdefined(p, :int32_data) && !isempty(p.int32_data)
-            return reshape(p.int32_data , reverse(p.dims)...)
+            return reshape(p.int32_data , reverse(p.dims)...) |> wrap
         end
-        return reshape(reinterpret(Int32, p.raw_data), reverse(p.dims)...)
+        return reshape(reinterpret(Int32, p.raw_data), reverse(p.dims)...) |> wrap
     end
 
     if p.data_type === TensorProto_DataType.INT8
-        return reshape(reinterpret(Int8, p.raw_data), reverse(p.dims)...)
+        return reshape(reinterpret(Int8, p.raw_data), reverse(p.dims)...) |> wrap
     end
 
     if p.data_type === TensorProto_DataType.DOUBLE
         if isdefined(p, :double_data) && !isempty(p.double_data)
-            return reshape(p.double_data , reverse(p.dims)...)
+            return reshape(p.double_data , reverse(p.dims)...) |> wrap
         end
-        return reshape(reinterpret(Float64, p.raw_data), reverse(p.dims)...)
+        return reshape(reinterpret(Float64, p.raw_data), reverse(p.dims)...) |> wrap
     end
 
     if p.data_type === TensorProto_DataType.FLOAT
         if isdefined(p,:float_data) && !isempty(p.float_data)
-            return reshape(reinterpret(Float32, p.float_data), reverse(p.dims)...)
+            return reshape(reinterpret(Float32, p.float_data), reverse(p.dims)...) |> wrap
         end
-        return reshape(reinterpret(Float32, p.raw_data), reverse(p.dims)...) 
+        return reshape(reinterpret(Float32, p.raw_data), reverse(p.dims)...) |> wrap
     end
 
     if p.data_type === TensorProto_DataType.FLOAT16
-        return reshape(reinterpret(Float16, p.raw_data), reverse(p.dims)...)
+        return reshape(reinterpret(Float16, p.raw_data), reverse(p.dims)...) |> wrap
     end
 end
 
