@@ -1,8 +1,8 @@
 
 # Convenience function to allow for things like Array(tp) or CuArray(tp)
 # Not sure if this counts as type piracy...
-(::Type{T})(p::TensorProto) where T = array(p) |> T
-(::Type{Ref{T}})(p::TensorProto) where T = array(p) |> T |> Ref
+(::Type{T})(p::TensorProto) where T <: AbstractArray = array(p) |> T
+(::Type{Ref{T}})(p::TensorProto) where T <: AbstractArray = array(p) |> T |> Ref
 
 
 """
