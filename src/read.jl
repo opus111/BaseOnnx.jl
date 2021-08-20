@@ -67,9 +67,9 @@ function attribute(p::AttributeProto)
     if (p._type != 0)
         field = [:f, :i, :s, :t, :g, :floats, :ints, :strings, :tensors, :graphs][p._type]
         if field === :s 
-            return Symbol(p.name) => String(getfield(p, field))
+            return Symbol(p.name) => String(copy(getfield(p, field)))
         elseif  field === :strings
-            return Symbol(p.name) => String.(getfield(p, field))
+            return Symbol(p.name) => String.(copy.(getfield(p, field)))
         end
         return Symbol(p.name) => getfield(p, field)
     end  
